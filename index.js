@@ -12,7 +12,7 @@ app.use( express.json() );
 
 // mongodb client connect
 const uri = `mongodb+srv://${ process.env.DB_user }:${ process.env.DB_password }@cluster0.mdoqsyi.mongodb.net/?retryWrites=true&w=majority`;
-console.log( uri );
+// console.log( uri );
 const client = new MongoClient( uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 } );
 
 async function run () {
@@ -23,7 +23,7 @@ async function run () {
         app.get( '/services', async ( req, res ) => {
             const query = {}
             const cursor = serviceCollection.find( query );
-            const services = await cursor.limit( 3 ).toArray();
+            const services = await cursor.toArray();
             res.send( services );
         } );
 
@@ -34,6 +34,13 @@ async function run () {
             const service = await serviceCollection.findOne( query )
             res.send( service )
         } )
+
+        // post services
+        app.post( '/services', async ( req, res ) => {
+            const service = req.body;
+            const result = await serviceCollection.insertOne( service );
+            res.json( result );
+        } );
     }
     finally {
 
