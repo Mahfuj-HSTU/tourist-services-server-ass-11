@@ -45,12 +45,18 @@ async function run () {
 
         // Review api
         // get review
+        app.get( '/getreviews/:serviceId', async ( req, res ) => {
+            // console.log( req.params.serviceId );
+            const serviceId = req.params.serviceId
+            const result = await reviewCollection.find( { service: serviceId } ).toArray();
+            res.send( result )
+        } )
 
         // post review
-        app.post( '/review', async ( req, res ) => {
+        app.post( '/reviews', async ( req, res ) => {
             const review = req.body;
             const result = await reviewCollection.insertOne( review );
-            res.json( result );
+            res.send( result );
             // console.log( review )
         } );
 
