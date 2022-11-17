@@ -71,7 +71,6 @@ async function run () {
             res.send( result );
             // console.log( review )
         } );
-
     }
     finally {
 
@@ -79,7 +78,6 @@ async function run () {
 }
 
 run().catch( error => console.log( error ) )
-
 
 app.get( '/', ( req, res ) => {
     res.send( 'Tourist spot server is running' )
